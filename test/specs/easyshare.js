@@ -4,6 +4,8 @@ const {expect} = chai;
 
 const url = 'https://easyshare-dot-services-dot-staging-schedulingengine.el.r.appspot.com/api/v1/profile/2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b/hours';
 
+
+
 const headers = {
     'authority' : 'easyshare-dot-services-dot-staging-schedulingengine.el.r.appspot.com',
     'authorization' : token,
@@ -12,18 +14,23 @@ const headers = {
     'merchantid' : '2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b'
 }
 
-describe('Testing the staff api in the easyshare module', async() => {
-    it('should fetch details of the staff to be Syed Yaseen', async() => {
-        const result = await axios({
+describe('Testing the staff api in the easyshare module', () => {
+
+    it('should fetch details of the staff to be Syed Yaseen', () => {
+        axios({
             method: 'GET',
             url: url,
             headers: headers
         })
         .then(res => {
+            // console.log(res);
+            expect(res.status).to.equal(200);
+            expect(res.data.response).to.be.true;
             expect(res.data.data.items[0].profile.fullname).to.be.equal('Syed Yaseen');
         })
         .catch(err => {
             console.log(err);
         })
     });
+
 });
