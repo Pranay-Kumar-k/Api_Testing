@@ -7,11 +7,18 @@ const axios = require('axios');
 
 const url = `https://jsonplaceholder.typicode.com/posts/1`
 
-describe('Testing the rest api', async() => {
-    it('should fetch details of the post', async() => {
-        const result = await axios.get(url);
-        // console.log(result);
-        expect(result.data.title).to.be.equal('sunt aut facere repellat provident occaecati excepturi optio reprehenderit');
+describe('Testing the rest api', () => {
+    it('should fetch details of the post', (done) => {
+         axios.get(url)
+            .then(res => {
+                expect(res.data.userId).to.equal(1);
+                done();
+            })
+            .catch(err => {
+                console.log(err)
+                done(err);
+            })
+        
     });
 });
 
