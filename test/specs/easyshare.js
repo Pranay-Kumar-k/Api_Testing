@@ -192,4 +192,74 @@ describe(`Testing the api's in the easyshare module`, () => {
         })
     });
 
+    it('Anytime Service api - Add a meeting with the post request for the given data and response title should be dummy meeting', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'POST',
+            headers: headers,
+            url: url,
+            data: {
+                "brand": brandid,
+                "merchantId": merchantId,
+                "referrerType": "PROVIDER",
+                "scheduleType": "INDIVIDUAL",
+                "provider": [
+                    "2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b"
+                ],
+                "isPrivate": false,
+                "title": "dummy meeting"
+            }
+        })
+        .then(res => {
+            // console.log(res.data.data)
+            expect(res.status).to.equal(200);
+            expect(res.data.response).to.be.true;
+            expect(res.data.data.title).to.be.equal('dummy meeting');
+            done();
+        })
+        .catch(err => {
+            console.log(err);
+            done(err);
+        })
+    });
+
+    it('Setmore Service api - Edit a meeting with the PUT request for the given data and response id should be f86263b6-d988-4513-ae42-10ecc1889c53', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'PUT',
+            url: url,
+            data: {
+                "id": "f86263b6-d988-4513-ae42-10ecc1889c53",
+                "brand": "110003eb-76c1-4b81-a96a-4cdf91bf70fb",
+                "merchantId": merchantId,
+                "referrerType": "MERCHANT",
+                "title": "Test meeting 123",
+                "provider": [
+                    "ra3ac1634885874116",
+                    "rce712b90f057af52736efc23b6614979eff29aa0-d",
+                    "r93431634885792142"
+                ],
+                "scheduleType": "SERVICE"
+            }
+        })
+        .then(res => {
+            // console.log(res.data.data)
+            expect(res.status).to.equal(200);
+            expect(res.data.response).to.be.true;
+            expect(res.data.data.title).to.be.equal('Test meeting 123');
+            expect(res.data.data.id).to.be.equal('f86263b6-d988-4513-ae42-10ecc1889c53');
+            done();
+        })
+        .catch(err => {
+            // console.log(err);
+            done(err);
+        })
+    });
+
 });
