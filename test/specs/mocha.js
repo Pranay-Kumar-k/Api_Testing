@@ -15,7 +15,7 @@ describe('Testing the rest api', () => {
                 done();
             })
             .catch(err => {
-                console.log(err)
+                
                 done(err);
             })
         
