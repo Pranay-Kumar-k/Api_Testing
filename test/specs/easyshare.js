@@ -694,9 +694,9 @@ describe('Testing the Delete service api in Anytime', () => {
     });
 });
 
-describe(`Testing the add and edit meeting api's in the easyshare`, () => {
-
-    it('Anytime Service api - Add a meeting with the post request for the given data and response title should be dummy meeting', (done) => {
+describe('Testing Anytime service api - add metting', () => {
+    
+    it('Add a meeting with the post request for the given data and response title should be dummy meeting', (done) => {
 
         const endpoint = 'api/v1/services/type';
         const url = baseUrl + endpoint;
@@ -718,19 +718,116 @@ describe(`Testing the add and edit meeting api's in the easyshare`, () => {
             }
         })
         .then(res => {
-             
             expect(res.status).to.equal(200);
             expect(res.data.response).to.be.true;
             expect(res.data.data.title).to.be.equal('dummy meeting');
             done();
         })
         .catch(err => {
-             
             done(err);
         })
     });
 
-    it('Setmore Service api - Edit a meeting with the PUT request for the given data and response id should be f86263b6-d988-4513-ae42-10ecc1889c53', (done) => {
+    it('Add a meeting with the post request for the given data and response title should be dummy meeting if the brandid is wrong/empty string', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'POST',
+            headers: headers,
+            url: url,
+            data: {
+                "brand": 'abcd',
+                "merchantId": merchantId,
+                "referrerType": "PROVIDER",
+                "scheduleType": "INDIVIDUAL",
+                "provider": [
+                    "2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b"
+                ],
+                "isPrivate": false,
+                "title": "dummy meeting"
+            }
+        })
+        .then(res => {
+            expect(res.status).to.equal(200);
+            expect(res.data.response).to.be.true;
+            expect(res.data.data.title).to.be.equal('dummy meeting');
+            done();
+        })
+        .catch(err => {
+            done(err);
+        })
+    });
+
+    it('If the brandid is null then it should through the error with status code of 400', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'POST',
+            headers: headers,
+            url: url,
+            data: {
+                "brand": null,
+                "merchantId": '',
+                "referrerType": "PROVIDER",
+                "scheduleType": "INDIVIDUAL",
+                "provider": [
+                    "2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b"
+                ],
+                "isPrivate": false,
+                "title": "dummy meeting"
+            }
+        })
+        .then(res => {
+            done();
+        })
+        .catch(err => {
+            expect(err.response.status).to.equal(400);
+            expect(err.response.data.response).to.be.false;
+            expect(err.response.data.msg).to.be.a('string', 'Invalid payload required brand');
+            done();
+        })
+    });
+
+    it('If the merchantId is empty string/null/wrong then it should through the error with status code of 400', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'POST',
+            headers: headers,
+            url: url,
+            data: {
+                "brand": brandid,
+                "merchantId": 'wrong',
+                "referrerType": "PROVIDER",
+                "scheduleType": "INDIVIDUAL",
+                "provider": [
+                    "2eb699b3-cbf1-4fdb-b427-5a5ad6baad8b"
+                ],
+                "isPrivate": false,
+                "title": "dummy meeting"
+            }
+        })
+        .then(res => {
+            done();
+        })
+        .catch(err => {
+            expect(err.response.status).to.equal(400);
+            expect(err.response.data.response).to.be.false;
+            expect(err.response.data.msg).to.be.a("string", "id can't be null or empty :: ");
+            done();
+        })
+    });
+})
+
+describe(`Testing the Anytime Service api - edit meeting`, () => {
+
+    it('Edit a meeting with the PUT request for the given data and response id should be f86263b6-d988-4513-ae42-10ecc1889c53 and title should be Test meeting 123', (done) => {
 
         const endpoint = 'api/v1/services/type';
         const url = baseUrl + endpoint;
@@ -753,7 +850,6 @@ describe(`Testing the add and edit meeting api's in the easyshare`, () => {
             }
         })
         .then(res => {
-             
             expect(res.status).to.equal(200);
             expect(res.data.response).to.be.true;
             expect(res.data.data.title).to.be.equal('Test meeting 123');
@@ -761,8 +857,74 @@ describe(`Testing the add and edit meeting api's in the easyshare`, () => {
             done();
         })
         .catch(err => {
-             
             done(err);
+        })
+    });
+
+    it('Response should be true if the meeting id is wrong', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'PUT',
+            url: url,
+            data: {
+                "id": "abcd",
+                "brand": "110003eb-76c1-4b81-a96a-4cdf91bf70fb",
+                "merchantId": merchantId,
+                "referrerType": "MERCHANT",
+                "title": "Test meeting 123",
+                "provider": [
+                    "ra3ac1634885874116",
+                    "rce712b90f057af52736efc23b6614979eff29aa0-d",
+                    "r93431634885792142"
+                ],
+                "scheduleType": "SERVICE"
+            }
+        })
+        .then(res => {
+            expect(res.status).to.equal(200);
+            expect(res.data.response).to.be.true;
+            expect(res.data.data.title).to.be.equal('Test meeting 123');
+            expect(res.data.data.id).to.be.equal('abcd');
+            done();
+        })
+        .catch(err => {
+            done(err);
+        })
+    });
+
+    it('Response should be true if the meeting id is empty string/null', (done) => {
+
+        const endpoint = 'api/v1/services/type';
+        const url = baseUrl + endpoint;
+
+        axios({
+            method: 'PUT',
+            url: url,
+            data: {
+                "id": null,
+                "brand": "110003eb-76c1-4b81-a96a-4cdf91bf70fb",
+                "merchantId": merchantId,
+                "referrerType": "MERCHANT",
+                "title": "Test meeting 123",
+                "provider": [
+                    "ra3ac1634885874116",
+                    "rce712b90f057af52736efc23b6614979eff29aa0-d",
+                    "r93431634885792142"
+                ],
+                "scheduleType": "SERVICE"
+            }
+        })
+        .then(res => {
+            done();
+        })
+        .catch(err => {
+            expect(err.response.status).to.equal(400);
+            expect(err.response.data.response).to.be.false;
+            expect(err.response.data.msg).to.be.a("string", "id can't be null or empty :: ")
+            done();
         })
     });
 
