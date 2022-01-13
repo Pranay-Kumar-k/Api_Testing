@@ -8,8 +8,6 @@ const brandid = '0dab9518-34d4-4725-a847-ca7ff65168a2';
 
 const merchantId = '30854ee8-2329-4208-b199-638d18a0320d';
 
-const token = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImQxNzJhY2MxMDJjMGRhYWQzNThiZmM5ZDYwZWEyMWJhOWVjY2I2ZWUifQ.eyJpc3MiOiJodHRwczovL2FueXdoZXJlLnN0YWdpbmcuYW55d2hlcmVhdXRoLmNvbSIsImlhdCI6MTYzOTM4NDEyMSwicHJval9pZCI6InNldG1vcmUiLCJ0eXBlIjoidXNlciIsInN1YiI6IjMwODU0ZWU4LTIzMjktNDIwOC1iMTk5LTYzOGQxOGEwMzIwZCIsImV4cCI6MTYzOTk4ODkyMSwianRpIjoiNWM4ZDI5czdsR08zOFh6RSJ9.dgPyoahToXAKs0jZFZeUHNqtv_WGfAdJC_Dga_84rYeV0lGLTxHoUi4Nr8azFT4G9UuCwiPIRsd9IstX9Fl0GUMNyhJMO6_bW-473Ejjr5A6C4Y5Jm_Xmbi_ErBCvqFKlXGLhRt5e9O2dB7sxfJPdMhp1blj6B-Xub4xR6z9ekcRfvguIAFwcxkQgJstPZBT8Bt_wERNRmvuBZRXUaPJcOr8W3MVVz1-mmQBvS_WVXsZlG_wNlNYzO2q-E74aKiONL7JM3l5yvpdZdHRZl6-Ku25bDRxB0suxUeEg2NirQyOK2pcBH1UfcHT8KErB7BBV9x0SlwjV0XwUqiL0A-5ijw`;
-
  headers = {
     'authority' : 'easyshare-dot-services-dot-staging-schedulingengine.el.r.appspot.com',
     'authorization' : token,
